@@ -64,6 +64,8 @@ import {
   HtmlAttrAst,
   HtmlTextAst,
   HtmlCommentAst,
+  HtmlExpansionAst,
+  HtmlExpansionCaseAst,
   htmlVisitAll
 } from './html_ast';
 
@@ -251,6 +253,10 @@ class TemplateParseVisitor implements HtmlAstVisitor {
       });
     }
   }
+
+  visitExpansion(ast: HtmlExpansionAst, context: any): any { return null; }
+
+  visitExpansionCase(ast: HtmlExpansionCaseAst, context: any): any { return null; }
 
   visitText(ast: HtmlTextAst, parent: ElementContext): any {
     var ngContentIndex = parent.findNgContentIndex(TEXT_CSS_SELECTOR);
@@ -770,6 +776,8 @@ class NonBindableVisitor implements HtmlAstVisitor {
     var ngContentIndex = parent.findNgContentIndex(TEXT_CSS_SELECTOR);
     return new TextAst(ast.value, ngContentIndex, ast.sourceSpan);
   }
+  visitExpansion(ast: HtmlExpansionAst, context: any): any { return ast; }
+  visitExpansionCase(ast: HtmlExpansionCaseAst, context: any): any { return ast; }
 }
 
 class BoundElementOrDirectiveProperty {
